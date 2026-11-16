@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Opening ChatGPT</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #fff; color: #111; margin: 0; padding: 32px 16px; text-align: center; }
+  a { display: inline-block; margin: 10px 0; padding: 12px 18px; border-radius: 8px; background: #111; color: #fff; text-decoration: none; }
+  a.web { background: #eee; color: #111; }
+</style>
+</head>
+<body>
+<p>Opening the ChatGPT app…</p>
+<p><a id="app" href="#">Open in ChatGPT app</a></p>
+<p><a id="web" class="web" href="#">Open on chatgpt.com instead</a></p>
+<script>
+  // POC redirect: an https link ChatGPT will make clickable, which hands off to the app's undocumented scheme.
+  // Params: t = prompt text, s = query param name for the app scheme ("prompt" or "q").
+  var p = new URLSearchParams(location.search);
+  var text = p.get("t") || "";
+  var param = p.get("s") === "q" ? "q" : "prompt";
+  var app = "com.openai.chat://chatgpt.com/?" + param + "=" + encodeURIComponent(text);
+  var web = "https://chatgpt.com/?q=" + encodeURIComponent(text);
+  document.getElementById("app").href = app;
+  document.getElementById("web").href = web;
+  location.href = app;
+</script>
+</body>
+</html>
